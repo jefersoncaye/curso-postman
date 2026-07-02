@@ -21,4 +21,11 @@ jobs:
       - name: Run API Tests
         run: |
           newman run Collections/ServeRest.postman_collection.json \
-            -e Environments/ServeRest.postman_environment.json
+            -e Environments/ServeRest.postman_environment.json \
+            -r "cli,htmlextra" --reporter-htmlextra-export relatorio.html
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-html
+          path: relatorio.html
