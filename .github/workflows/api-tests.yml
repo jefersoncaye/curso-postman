@@ -22,10 +22,11 @@ jobs:
         run: |
           newman run Collections/ServeRest.postman_collection.json \
             -e Environments/ServeRest.postman_environment.json \
-            -r "cli,htmlextra" --reporter-htmlextra-export relatorio.html
-      - name: Upload HTML report
+            -r cli,junit \
+            --reporter-junit-export resultado.xml
+      - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: relatorio-html
-          path: relatorio.html
+          name: relatorio-testes
+          path: resultado.xml
