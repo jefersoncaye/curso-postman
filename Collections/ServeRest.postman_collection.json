@@ -42,6 +42,18 @@
                 "packages": {},
                 "requests": {}
               }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const carimbo = `${Date.now()}_${Math.floor(Math.random() * 1000000)}`;\r",
+                  "pm.environment.set(\"email_admin\", `admin_${carimbo}@qa.com`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
           ],
           "request": {
@@ -123,7 +135,7 @@
                   "});\r",
                   "\r",
                   "pm.test(\"E-mail correto retornado\", function(){\r",
-                  "    pm.expect(pm.response.json().email).to.eql(pm.collectionVariables.get(\"email_admin\"));\r",
+                  "    pm.expect(pm.response.json().email).to.eql(pm.environment.get(\"email_admin\"));\r",
                   "});\r",
                   ""
                 ],
@@ -227,6 +239,18 @@
                 "packages": {},
                 "requests": {}
               }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const carimbo = `${Date.now()}_${Math.floor(Math.random() * 1000000)}`;\r",
+                  "pm.environment.set(\"email_comun\", `comun_${carimbo}@qa.com`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
           ],
           "request": {
@@ -234,7 +258,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Usuario Comun Teste\",\r\n  \"email\": \"Teste@teste456456465.com.br\",\r\n  \"password\": \"teste1234\",\r\n  \"administrador\": \"false\"\r\n}\r\n",
+              "raw": "{\r\n  \"nome\": \"Usuario Comun Teste\",\r\n  \"email\": \"{{email_comun}}\",\r\n  \"password\": \"teste1234\",\r\n  \"administrador\": \"false\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -421,6 +445,18 @@
                 "packages": {},
                 "requests": {}
               }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const carimbo = `${Date.now()}_${Math.floor(Math.random() * 1000000)}`;\r",
+                  "pm.environment.set(\"produto_nome\", `Produto ${carimbo}`);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
             }
           ],
           "request": {
@@ -434,7 +470,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Produto Teste\",\r\n  \"preco\": 470,\r\n  \"descricao\": \"Mouse\",\r\n  \"quantidade\": 381\r\n}",
+              "raw": "{\r\n  \"nome\": \"{{produto_nome}}\",\r\n  \"preco\": 470,\r\n  \"descricao\": \"Mouse\",\r\n  \"quantidade\": 381\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -467,7 +503,7 @@
                   "});\r",
                   "\r",
                   "pm.test(\"Nome Produto Correto\", () => {\r",
-                  "    pm.expect(resposta.nome).to.eql(\"Produto Teste\");\r",
+                  "    pm.expect(resposta.nome).to.eql(pm.environment.get(\"produto_nome\"));\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -545,7 +581,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "{{base_url}}/produtos?nome=Produto Teste",
+              "raw": "{{base_url}}/produtos?nome={{produto_nome}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -555,7 +591,7 @@
               "query": [
                 {
                   "key": "nome",
-                  "value": "Produto Teste"
+                  "value": "{{produto_nome}}"
                 }
               ]
             }
@@ -594,7 +630,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Produto Teste\",\r\n  \"preco\": 800,\r\n  \"descricao\": \"Mouse sem fio\",\r\n  \"quantidade\": 381\r\n}",
+              "raw": "{\r\n  \"nome\": \"{{produto_nome}}\",\r\n  \"preco\": 800,\r\n  \"descricao\": \"Mouse sem fio\",\r\n  \"quantidade\": 381\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
